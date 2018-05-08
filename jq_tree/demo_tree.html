@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/zTree.v3/3.5.33/css/zTreeStyle/zTreeStyle.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zTree.v3/3.5.33/js/jquery.ztree.core.js"></script>
+    <style>
+      *{
+        padding: 0;margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+      <!-- input框 -->
+        <div class="content_wrap">
+                <div class="left">
+                    <ul class="list">
+                        <li class="title">&nbsp;&nbsp;城市：<input id="citySel" type="text" 
+                            style="width: 120px;" />
+                        </li>
+                    </ul>
+                </div>
+        </div>
+        <!-- 树菜单 treeDemo必须为id,统一为数组作为对象第四个参数-->
+        <div class="menuContent" style="display: none; position: absolute;">
+                <ul id="treeDemo" class="ztree" style="margin-top: 0; width: 110px;">
+                </ul>
+        </div>
+        <script src="tree.js"></script>
+  </body>
+  <script>
+    //设置配置文件
+    var setting = {
+            view: {
+                selectedMulti: false //是否允许多选
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            // callback: {
+            //     //zTree节点的点击事件
+            //     onClick: onClick
+            // }
+    };
+    //设置Ztree的初始数据
+    var zNodes = [
+            { id: 1, pId: 0, name: "北京" },
+            { id: 2, pId: 0, name: "天津" },
+            { id: 3, pId: 0, name: "上海" },
+            { id: 6, pId: 0, name: "重庆" },
+            { id: 4, pId: 0, name: "河北省", open: false },
+            { id: 41, pId: 4, name: "石家庄" },
+            { id: 42, pId: 4, name: "保定" },
+            { id: 43, pId: 4, name: "邯郸" },
+            { id: 44, pId: 4, name: "广德" },
+            { id: 5, pId: 0, name: "广东省", open: false },
+            { id: 51, pId: 5, name: "广州" },
+            { id: 52, pId: 5, name: "深圳" },
+            { id: 53, pId: 5, name: "东莞" },
+            { id: 54, pId: 5, name: "佛山" },
+            { id: 6, pId: 0, name: "福建省", open: false },
+            { id: 61, pId: 6, name: "福州" },
+            { id: 62, pId: 6, name: "厦门" },
+            { id: 63, pId: 6, name: "泉州" },
+            { id: 64, pId: 6, name: "三明" }
+         ];
+         //回调函数
+         function callBack(){
+             //这儿写ajax请求，并且rutrun 回数据
+             return  [
+            { id: 1, pId: 0, name: "四川" },
+            { id: 2, pId: 0, name: "天津1" },
+            { id: 3, pId: 0, name: "上海1" },
+            { id: 6, pId: 0, name: "重庆1" },
+            { id: 4, pId: 0, name: "河北省1", open: false },
+            { id: 41, pId: 4, name: "石家庄1" },
+            { id: 42, pId: 4, name: "保定1" },
+            { id: 43, pId: 4, name: "邯郸1" },
+            { id: 44, pId: 4, name: "广德1" },
+            { id: 5, pId: 0, name: "广东省1", open: false },
+            { id: 51, pId: 5, name: "广州1" },
+            { id: 52, pId: 5, name: "深圳1" },
+            { id: 53, pId: 5, name: "东莞1" },
+            { id: 54, pId: 5, name: "佛山1" },
+            { id: 6, pId: 0, name: "福建省1", open: false },
+            { id: 61, pId: 6, name: "福州1" },
+            { id: 62, pId: 6, name: "厦门1" },
+            { id: 63, pId: 6, name: "泉州1" },
+            { id: 64, pId: 6, name: "三明1" }
+         ]
+         }
+        $("#citySel").searchTree(setting,zNodes,callBack,'treeDemo')
+  </script>
+</html>

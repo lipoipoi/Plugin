@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>demo</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+      *{
+        padding: 0;margin: 0;
+      }
+      .box{
+        display: block;
+      }
+      .triangle_bottom{
+        width:0;height:0;border-top: 3px solid transparent;border-right: 6px solid red;border-bottom: 3px solid transparent;position:absolute
+      }
+      .triangle_top{
+        width:0;height:0;border-top: 2px solid transparent;border-right: 6px solid white;border-bottom: 2px solid transparent;position:absolute;
+      }
+      .warring{
+        font-size:12px;border:1px solid red;display:inline-block;padding:0 5px;color:red;border-radius:3px;
+      }
+    </style>
+  </head>
+  <body>
+        <div class="box">自定义验证：<input class="test" type="text"  dgg-rule={mode:'custom',rule:/^[\u4E00-\u9FA5]{1,6}$/,warring:'只能为中文'}></div>
+        <div class="box">内置非空验证：<input class="test" type="text"  dgg-rule={mode:'inlay',rule:'nonEmpty',warring:'不能为空'}></div>
+        <div class="box">内置仅数字验证：<input class="test" type="text"  dgg-rule={mode:'inlay',rule:'number',warring:'请输入数字'}></div>
+        <div class="box">内置有两位小数验证：<input class="test" type="text"  dgg-rule={mode:'inlay',rule:'price',warring:'请输入两位小数的正数'}></div>
+        <div class="box">内置仅英文验证：<input class="test" type="text"  dgg-rule={mode:'inlay',rule:'en',warring:'请输入英文字母'}></div>
+        <div class="box">内置密码验证：<input class="test" type="text"  dgg-rule={mode:'inlay',rule:'password',warring:'请输入正确的密码'}></div>
+        <div class="box">内置邮箱验证：<input class="test" type="text"  dgg-rule={mode:'inlay',rule:'email',warring:'请输入正确的邮箱号码'}></div>
+        <div class="box">内置身份证号码验证：<input class="test" type="text"  dgg-rule={mode:'inlay',rule:'idCard',warring:'请输入正确的身份证号码'}></div>
+        <div class="box">内置电话号码验证：<input class="test" type="text"  dgg-rule={mode:'inlay',rule:'phone',warring:'请输入正确的电话号码'}></div>
+        <div style="display: inline-block">
+          <a href="javascript:;" id="testBtn">test</a></div>
+        <script src="validate.js">test</script>
+        <script>
+            $(function(){
+              $("#testBtn").on("click",function(){
+                 var reslut= $(".test").Validate()
+                 console.log(reslut)
+              })
+            })
+        </script>
+  </body>
+</html>
