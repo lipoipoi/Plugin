@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>demo</title>
+    <link rel="stylesheet" href="tree.css">
+    <script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/underscore.js/1.9.0/underscore-min.js"></script>
+    <script src="tree.js"></script>
+    <!-- <script src="dialog.js"></script> -->
+    <style>
+      *{
+        padding: 0;margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+      <div id="tree"></div>
+      <div>
+          <button id="getNode">获取节点</button>
+          <button id="refresh">刷新整棵树</button>
+          <button id="open">打开某一节点</button>
+          <button id="close">关闭某一节点</button>
+          <button id="children">获取子节点</button>
+          <button id="parent">获取父节点</button>
+          <button id="edit">修改本节点</button>
+          <button id="delete">删除节点</button>
+          <button id="add">增加节点</button>
+          <button id="updateNode">刷新节点</button>
+          <button id="clone">复制节点</button>
+          <button id="check">选中节点</button>
+      </div>
+  </body>
+  <script>
+    var data =[
+              {"isParent":true,"name":"成都顶呱呱投资集团1","pId":0,"id":"1","open":true},
+              {"isParent":true,"name":"成都顶呱呱投资集团2","pId":0,"id":"2","open":false},
+              {"isParent":true,"name":"成都顶呱呱投资集团3","pId":0,"id":"3","open":false},
+              {"isParent":true,"name":"顶联互动","pId":"1","id":"12"},
+              {"isParent":true,"name":"加盟商","pId":"1","id":"13"},
+              {"isParent":true,"name":"企业服务研究院","pId":"1","id":"14"},
+              {"isParent":true,"name":"集团运营中心1","pId":"12","id":"121"},
+              {"isParent":true,"name":"集团运营中心2","pId":"14","id":"128"},
+              {"isParent":true,"name":"集团运营中心3","pId":"13","id":"126"},
+              {"isParent":true,"name":"集团运营中心4","pId":"12","id":"123"}
+    ]
+    var setting ={
+            // 预加载设置
+            preFetch:{
+              // 预加载层级
+              preNum:1,
+              // 预加载ajax配置
+              preFetchAjax:{
+                url:'ajax.json',                  //路径
+                // async:true,                    //是否异步，默认为true  
+                // contentType:'application/json',//contentType application/json0
+                // type:"get",                    //ajax类型 默认为get
+                // dataType:'json',               //设置dataType 默认为false
+                data:{id:"1"},                    //参数
+                // ajax发送的内容success为回调方法
+                success:function(data){           //回调函数
+                  return data.data
+                }
+              }
+            },
+            // 拖拽以及复制ajax API
+            node:{
+                icon:'check'                               //节点图标
+            },
+            // 回调
+            callBack:{
+              // beforeCollapse:function(id,node){
+              //   alert('我是展开前')
+              //   console.log(id,node)
+              //   // console.log(node.children())
+              // },
+              // onCollapse:function(id,node){
+              //   alert('我是展开后')
+              //   console.log(id,node)
+              // },
+              // beforeClick:function(id,node){
+              //   alert('我是点击前')
+              //   console.log(id,node)
+              // },
+              // onClick:function(id,node){
+              //   alert('我是点击后')
+              //   console.log(id,node)
+              // },
+              // beforeDblClick:function(id,node){
+              //   alert('我是双击前')
+              //   console.log(id,node)
+              // },
+              // onDbClick:function(id,node){
+              //   alert('我是双击后')
+              //   console.log(id,node)
+              // }
+              beforeDrag:function(){
+              },
+              afterDrag:function(dragId,dropId,oldData){
+                console.log(dragId,dropId,oldData)
+              }
+            }
+          }
+      var tree = $.fn.dTree('tree',setting,data)
+      var node = tree.getNodesById('12') ;
+      $("#getNode").on("click",function(){
+      var node = tree.getNodesById('12') ;
+        console.log(node)
+      })
+      $("#refresh").on("click",function(){
+        var data =[
+              {"isParent":true,"name":"成都顶呱呱投资集团11","pId":0,"id":"1","open":true},
+              {"isParent":true,"name":"成都顶呱呱投资集团12","pId":0,"id":"2","open":false},
+              {"isParent":true,"name":"成都顶呱呱投资集团13","pId":0,"id":"3","open":false},
+              {"isParent":true,"name":"顶联互动1","pId":"1","id":"12"},
+              {"isParent":true,"name":"加盟商1","pId":"1","id":"13"},
+              {"isParent":true,"name":"企业服务研究院1","pId":"1","id":"14"},
+              {"isParent":true,"name":"集团运营中心11","pId":"12","id":"121"},
+              {"isParent":true,"name":"集团运营中心12","pId":"14","id":"128"},
+              {"isParent":true,"name":"集团运营中心13","pId":"13","id":"126"},
+              {"isParent":true,"name":"集团运营中心14","pId":"12","id":"123"}
+            ]
+        var node = tree.refresh(data)
+      })
+      $("#open").on("click",function(){
+        tree.open(node.id)
+      })
+      $("#close").on("click",function(){
+        tree.close(node.id)
+      })
+      $("#children").on("click",function(){
+        var children = node.children()
+        console.log(children)
+      })
+      $("#parent").on("click",function(){
+        var parent = node.parent()
+        console.log(parent)
+      })
+      $("#edit").on("click",function(){
+        node.update('我被修改过辣',function(){
+          console.log("没错我是回调")
+        })
+      })
+      $("#delete").on("click",function(){
+        tree.del(node,function(){
+          console.log('你把我删掉了',node)
+        })
+      })
+      $("#add").on("click",function(){
+        node.add([{"isParent":true,"name":"成都顶呱呱投资集团13","pId":'12',"id":"129","open":false}],function(){
+          console.log()
+        })
+      })
+      $("#updateNode").on("click",function(){
+        node.refreshNode()
+      })
+      $("#clone").on("click",function(){
+        var node1 = node.clone(node.getData())
+        console.log(node1)
+      })
+      $("#check").on("click",function(){
+          node.check()
+      })
+  </script>
+</html>

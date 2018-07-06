@@ -1,0 +1,7 @@
+{
+    "data":[{"isParent":true,"name":"顶联互动","pId":"2","id":"22"},
+            {"isParent":true,"name":"加盟商","pId":"2","id":"23"},
+            {"isParent":true,"name":"企业服务研究院","pId":"2","id":"24"}
+        ]
+    ,"code":0,"msg":"请求成功"
+}
